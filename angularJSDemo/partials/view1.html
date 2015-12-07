@@ -1,0 +1,30 @@
+<!doctype HTML>
+<html>
+<head>
+
+</head>
+<body>
+    <h2>View 1</h2>
+    Name (order by name):
+    <br />
+    <input type="text" ng-model="name" />
+    <br />
+    <ul>
+        <li ng-repeat="cust in customers | filter:name | orderBy: 'name'">{{cust.name}} - {{cust.city}}</li>
+    </ul>
+    <rent-a-fail-menu></rent-a-fail-menu>
+    <br />
+    Customer name: 
+    <input type="text" ng-model="newCustomer.name" />
+    <br />
+    Customer city: 
+    <input type="text" ng-model="newCustomer.city" />
+    <br />
+    <button ng-click="addCustomer()">Add customer</button>
+    <br />
+    <br />
+    <a href="#/view2">View 2</a>
+
+</body>
+
+</html>
