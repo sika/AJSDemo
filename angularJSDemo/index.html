@@ -14,51 +14,70 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script>
-    var demoApp = angular.module("MyModule", ['ngRoute']);
-    demoApp.controller("simpleController", simpleControllerF);
+        //module
+        var demoApp = angular.module("MyModule", ['ngRoute']);
+        //factory
+        demoApp.factory('simpleFactory', simpleFactoryF);
+        function simpleFactoryF() {
+            var customers = [{
+                name: "simmelimme",
+                city: "st louis"
+            }, {
+                name: "simmelimme",
+                city: "Badminton city"
+            }, {
+                name: "pelleman",
+                city: "paris"
+            }, {
+                name: "ompalompa",
+                city: "shadow valley"
+            }, {
+                name: "nike the kite",
+                city: "Kesh Kesh"
+            }, {
+                name: "Mike the dike",
+                city: "Kesh Kesh"
+            }];
 
-    demoApp.config(routeProviderF);
+            var factory = {};
+            factory.getCustomers = function () {
+                return customers;
+            };
 
-    function simpleControllerF($scope) {
-        var customers = [{
-            name: "simmelimme",
-            city: "st louis"
-        }, {
-            name: "simmelimme",
-            city: "Badminton city"
-        }, {
-            name: "pelleman",
-            city: "paris"
-        }, {
-            name: "ompalompa",
-            city: "shadow valley"
-        }, {
-            name: "nike the kite",
-            city: "Kesh Kesh"
-        }, {
-            name: "Mike the dike",
-            city: "Kesh Kesh"
-        }];
-        $scope.customers = customers;
-
-        $scope.addCustomer = function () {
-            $scope.customers.push({
-                name: $scope.newCustomer.name,
-                city: $scope.newCustomer.city
-            });
+            return factory;
         }
-    }
+        //controller
+        demoApp.controller("simpleController", simpleControllerF);
+        //controller function
+        function simpleControllerF($scope, simpleFactory) {
+            var customers = simpleFactory.getCustomers();
 
-    function routeProviderF($routeProvider) {
-        $routeProvider.when('/view1', {
-            controller: 'simpleController',
-            templateUrl: 'partials/view1.html'
-        }).when('/view2',
-        {
-            controller: "simpleController",
-            templateUrl: "partials/view2.html"
-        }).otherwise({ redirectTo: '/view1' });
-    }
+            $scope.customers = customers;
+
+            $scope.addCustomer = function () {
+                $scope.customers.push({
+                    name: $scope.newCustomer.name,
+                    city: $scope.newCustomer.city
+                });
+            }
+        }
+        //router
+        demoApp.config(routeProviderF);
+        //router function
+        function routeProviderF($routeProvider) {
+            $routeProvider.when('/view1', {
+                controller: 'simpleController',
+                templateUrl: 'partials/view1.html'
+            }).when('/view2',
+            {
+                controller: "simpleController",
+                templateUrl: "partials/view2.html"
+            }).otherwise({ redirectTo: '/view1' });
+        }
+
+
+
+
     </script>
 </body>
 
